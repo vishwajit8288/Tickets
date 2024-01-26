@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { getDeptList,addDepartment } from '../services/Api'
+import { getDeptList, addDepartment, updateDepartmant, onDeleteDepartment, getEmpList } from '../services/Api'
 const Department = () => {
     let [deptData, setDeptData] = useState([]);
     let [isLoader, setIsLoader] = useState(true);
+    let [deptHead, setDeptHead] = useState([])
+    let [formsubmited, setFormSubmited] = useState(false);
+
 
     let [deptobj, setDeptObj] = useState({
-        "deptId":0,
+        "deptId": 0,
         "deptName": "",
-        "deptHead": 0,
-        "createdDate":""
+        "deptHeadEmpId": '',
+        "createdDate": new Date()
     })
     const changeFormValue = (event, key) => {
         setDeptObj(prevObj => ({ ...prevObj, [key]: event.target.value }))
     }
     useEffect(() => {
         showAllDeptData();
-    }, []);
+        showAllDeptHead();
+    },[]);
 
     const showAllDeptData = () => {
         getDeptList().then((data) => {
@@ -23,36 +27,111 @@ const Department = () => {
             setIsLoader(false);
         })
     }
+    const showAllDeptHead = () => {
+        getEmpList().then((data) => {
+            setDeptHead(data.data)
+
+        })
+    }
     const addDept = () => {
-        addDepartment(deptobj).then((data) => {
-            if (data.result) {
+        try {
+            setFormSubmited(true)
+            if (deptobj.deptName != '' && deptobj.deptHeadEmpId != '' && deptobj.createdDate != '') {
+                addDepartment(deptobj).then((data) => {
+                    if (data.result) {
+                        debugger;
+                        alert("Department Added Successfully");
+                        showAllDeptData();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+            }
+
+        } catch (error) {
+            alert(error.code)
+        }
+
+
+    }
+    const onEdit = (item) => {
+
+        try {
+
+            setDeptObj(prevObj => ({
+                ...prevObj,
+                deptId: item.deptId,
+                deptName: item.deptName,
+                deptHeadEmpId: item.deptHeadEmpId,
+                createdDate: item.createdDate
+            }))
+        } catch (error) {
+            alert('Error Occuored');
+        }
+    }
+    //update
+    const updateAllDeptData = () => {
+        if (deptobj.deptName != '' && deptobj.deptHeadEmpId != '' && deptobj.createdDate != '') {
+            updateDepartmant(deptobj).then((data) => {
                 debugger;
-                alert("Department Added Successfully");
+                if (data.result) {
+                    debugger;
+                    alert("Department Update Successfully");
+                    showAllDeptData();
+                } else {
+                    alert(data.message);
+                }
+            })
+        }
+    }
+
+
+    const deleteAllDeptData = (deptId) => {
+        onDeleteDepartment(deptId).then((data) => {
+            debugger;
+            if (data.result) {
+                alert("Department Deleted Successfully");
                 showAllDeptData();
             } else {
                 alert(data.message);
             }
         })
-       
     }
+
+    const reset = () => {
+        setFormSubmited(false);
+        setDeptObj({
+            "deptId": 0,
+            "deptName": "",
+            "deptHeadEmpId": '',
+            "createdDate": ""
+        })
+    }
+
+
+
     return (
         <div>
             <div className='container-fluid'>
                 <div className='row'>
+
+
                     <div className='col-8'>
                         <div className='card'>
                             <div className='card-header bg-success'>
-                                Department List
+                            <strong className='text-white'> Department List</strong>
+                                
                             </div>
+
+
                             <div className='card-body'>
                                 <table className='table table-bordered'>
                                     <thead>
                                         <tr>
                                             <th>Sr No</th>
-                                            <th>DeptHeadName</th>
-                                            <th>DeptHead</th>
-                                            <th>DeptName</th>
-                                            <th>Created Date</th>
+                                            <th>Dept Name</th>
+                                            <th>Dept Head Name</th>
+                                            
                                             <th>Edit</th>
                                             <th>Delete</th>
 
@@ -80,12 +159,11 @@ const Department = () => {
                                             deptData.map((item, index) => {
                                                 return (<tr>
                                                     <td>{index + 1} </td>
-                                                    <td> {item.deptHeadName}</td>
-                                                    <td> {item.deptHead} </td>
                                                     <td> {item.deptName} </td>
-                                                    <td> {item.createdDate} </td>
-                                                    <td><button className='btn btn-sm btn-primary'> Edit</button> </td>
-                                                    <td> <button className='btn btn-sm btn-danger'> Delete</button></td>
+                                                    <td> {item.deptHeadName}</td>
+                                                    
+                                                    <td><button className='btn btn-success btn-sm' onClick={() => { onEdit(item) }}> <i className='fa fa-pencil'></i></button> </td>
+                                                    <td> <button className='btn btn-sm btn-danger btn-sm' onClick={() => deleteAllDeptData(item.deptId)}> <i className='fa fa-trash-o'></i></button></td>
                                                 </tr>)
                                             })
                                         }
@@ -94,40 +172,71 @@ const Department = () => {
                                     }
                                 </table>
                             </div>
+
+
                         </div>
                     </div>
+
                     <div className='col-4'>
                         <div className='card'>
+
                             <div className='card-header bg-success'>
-                                Add  Department
+                                <div className='row'>
+                                    <div className='col-6 text-start'>
+                                        <strong className='text-white'>  Add  Department</strong>
+                                    </div>
+
+                                </div>
+
                             </div>
+
                             <div className='card-body'>
                                 <div className='row'>
                                     <div className='col-6'>
                                         <label>Department Name</label>
-                                        <input type='text' className='form-control' onChange={(event) => { changeFormValue(event, 'deptName') }} value={deptobj.deptName} placeholder='Enter Department Name' />
-                                        {/* <div className='text-danger'>
-                                            {
-                                                //false/empty
-                                                formsubmited && deptobj.statusFor == '' && <span>Status For Is Required </span>
-                                            }
-                                        </div> */}
+                                        <input type='text' className='form-control' onChange={(event) => { changeFormValue(event, 'deptName') }} value={deptobj.deptName} placeholder='Enter Dept Name' />
+
+                                        {
+                                            //false/empty
+                                            formsubmited && deptobj.deptName == '' && <span className='text-danger'>Department Name Is Required </span>
+                                        }
+
                                     </div>
                                     <div className='col-6'>
                                         <label>Department Head</label>
-                                        <input type='text' className='form-control ' onChange={(event) => { changeFormValue(event, 'deptHead') }} value={deptobj.deptHead} placeholder='Enter Department Head' />
-                                        {/* <div className='text-danger'>
+                                        <select className='form-select' value={deptobj.deptHeadEmpId} onChange={(event) => { changeFormValue(event, 'deptHeadEmpId') }}>
+                                            <option value=''>Select Head</option>
                                             {
-                                               
-                                                formsubmited && deptobj.status == '' && <span>Status Is Required </span>
+                                                deptHead.map((item) => {
+                                                    return (<option value={item.employeeId}>{item.employeeName}</option>)
+                                                })
                                             }
-                                        </div> */}
+
+                                        </select>
+                                        {
+                                            //false/empty
+                                            formsubmited && deptobj.deptHeadEmpId == '' && <span className='text-danger'>Department Head Is Required </span>
+                                        }
+
+
+                                        <div className='text-danger'>
+                                            {
+
+                                                formsubmited && deptobj.deptHead == '' && <span>Department Head Is Required </span>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                                 <div className='row'>
                                     <div className='col-6'>
                                         <label>Creater Date</label>
-                                        <input type='date' className='form-control' onChange={(event) => { changeFormValue(event, 'createdDate') }} value={deptobj.createdDate} placeholder='Enter Creater Date' />
+                                        <input type='date' className='form-control' onChange={(event) => { changeFormValue(event, 'createdDate') }} value={deptobj.createdDate} />
+
+                                        {
+
+                                            formsubmited && deptobj.createdDate == '' && <span className='text-danger'>Creater Date Is Required </span>
+                                        }
+
                                     </div>
                                 </div>
 
@@ -135,21 +244,25 @@ const Department = () => {
 
                                 <div className='row mt-2'>
                                     <div className='col-6 text-start'>
-                                        <button className='btn btn-secondary'>Reset</button>
+                                        <button className='btn btn-secondary' onClick={reset}>Reset</button>
                                     </div>
                                     <div className='col-6 text-end'>
 
                                         {
-                                            deptobj.deptId == 0 && <button className='btn btn-primary ' onClick={addDept}>AddMaster</button>
+                                            deptobj.deptId == 0 && <button className='btn btn-primary ' onClick={addDept}>Add Department</button>
 
                                         }
                                         {
-                                            deptobj.deptId !== 0 && <button className='btn btn-sm btn-warning  p-2'> Update Master</button>
+                                            deptobj.deptId !== 0 && <button className='btn btn-sm btn-warning  p-2' onClick={updateAllDeptData}> Update Department</button>
                                         }
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
+
+
                     </div>
                 </div>
             </div>
