@@ -11,7 +11,7 @@ const Header = () => {
         const userInfo = localStorage.getItem('loginObj');
         if (userInfo !== null) {
         }
-    }, []);
+    },[]);
 
     const logout = () => {
         localStorage.removeItem('loginObj');
@@ -64,9 +64,20 @@ const Header = () => {
                                             </>
                                         </ul>
                                     )}
+                                    
+                                    <div className="row d-flex align-items-center">
+                                        <div className="col-8">
+                                            {userInfo && userInfo.emailId && (
+                                                <span className="text-white">
+                                                    {userInfo.emailId}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div className="col-4">
+                                            <button className="btn btn-danger" ><i className="fa fad fa-sign-out" onClick={logout}></i></button>
+                                        </div>
+                                    </div>
 
-                                    {/* Add a logout button */}
-                                    <button className="btn btn-danger" onClick={logout}>Logout</button>
                                 </div>
                             </nav>
                         </div>

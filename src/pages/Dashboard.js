@@ -1,120 +1,454 @@
 import React, { useState, useEffect } from 'react';
-import { getSuperAdmin } from '../services/Api';
+import { getSuperAdmin, getEmpDashboard, getDeptHeadDashData, getAdminEmpDashData } from '../services/Api';
 
 const Dashboard = () => {
-    const [superAdmin, setSuperAdmin] = useState([]);
+    const isLoggedIn = localStorage.getItem('loginObj');
 
-    const showSuperAdmin = () => {
-        getSuperAdmin().then((data) => {
-            console.log(data);
-            // Convert the object into an array of key-value pairs
-            const dataArray = Object.entries(data.data);
-            setSuperAdmin(dataArray);
-        });
-    };
-
+    const userInfo = JSON.parse(isLoggedIn);
+    const id = userInfo.employeeId;
+    const EmpRole = userInfo.role;
+    const [superAdminDash, setSuperAdminDash] = useState([]);
+    let [employeeDash, setEmpDash] = useState([]);
+    let [deptHeadDas, setHeadDash] = useState([]);
+    let [empAdminDash, setEmpAdminDash] = useState([]);
+    console.log(EmpRole)
     useEffect(() => {
-        showSuperAdmin();
+        if (EmpRole === 'Employee') {
+            getAllEmpDashData();
+        }
+        else if (EmpRole === 'Department Head') {
+            getAllDeptHeadDashData();
+        }
+        else if (EmpRole === 'Admin Department Employee') {
+            getAllAdminEmpDashData();
+        }
+        else {
+            showSuperAdmin();
+        }
     },[]);
 
+    // //employee dash
+    const getAllEmpDashData = () => {
+        getEmpDashboard(id).then((data) => {
+            setEmpDash([data.data])
+
+        })
+    }
 
 
-    const fieldIcons = {
-        totalDepartments: 'fa fa-building fa-2x',
-        totalEmployees: 'fa fa-users fa-2x',
-        totalTickets: 'fa fa-ticket fa-2x',
-        totalUnAssignedTickets: 'fa fa-exclamation-circle fa-2x',
-        totalAssignedTickets: 'fa fa-envelope fa-2x',
-        totalInProgressTickets: 'fa fa-hourglass-half fa-2x',
-        totalClosedTickets: 'fa fa-check-circle fa-2x',
-        // Add more fields and icons as needed
-    };
+    //super admin
+    const showSuperAdmin = () => {
+        getSuperAdmin().then((data) => {
+            setSuperAdminDash([data.data])
+        })
+    }
+
+    const getAllDeptHeadDashData = () => {
+        getDeptHeadDashData(id).then((data) => {
+            setHeadDash([data.data])
+        })
+    }
+
+    const getAllAdminEmpDashData = () => {
+        getAdminEmpDashData(id).then((data) => {
+            setEmpAdminDash([data.data])
+        })
+    }
+
 
 
 
 
     return (
         <div>
-            {/* <div className='container-fluid'>
-                <div className='row'>
-                    {superAdmin.map(([totalDepartments, value], index) => (
-                        <div key={index} className='col-lg-4 col-md-6'>
-                            <div className='card mb-4'>
-                                <div className='card-header bg-info'>
-                                    <strong className='text-white'>{totalDepartments}</strong>
-                                </div>
-                                <div className='card-body'>
-                                    <p className='card-text'>{value}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div> */}
-            {/* <div className='container'>
-                <div className='row mt-4'>
-                    <div class="col-4">
-                        <div class="card">
-                            <div class="card-body p-5">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h4><b></b></h4>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                               <span><b></b></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <i class="fa fa-user fa-3x"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
-
             <div className='container'>
                 <div className='row'>
-                    <div className='col-12'>
-                    <h3>Welcome Admin !!</h3>
-                    </div>
-               
-                </div>
-           
-                <div className='row mt-4'>
-                    {superAdmin.map(([item, value], index) => (
-                        <div key={index} className='col-lg-4 col-md-6 mb-4'>
-                            <div className='card  shadow height-100-p widged-style 3 bg-info' style={{backgroundColor:""}}>
-                                <div className='card-body'>
-                                    <div className='row'>
-                                        <div className='col-12'>
-                                            <div className='row'>
-                                                <div className='col-12'>
-                                                    <h4><b>{item.charAt(0).toUpperCase() + item.slice(1)}</b></h4>
+                    <div className='col-12 mt-4'>
+                        <div className="row">
+                            <div className="boxes col-12">
+                                <div className='col-12'>
+                                    {
+                                        EmpRole === 'Employee' && employeeDash.map((item) => {
+
+                                            return (
+                                                <div className='row'>
+                                                    <div className='col-3'>
+                                                        <div className='card bg-info p-3'>
+                                                            <div className='row'>
+                                                                <h4>Total Tickets</h4>
+                                                            </div>
+                                                            <div className='row'>
+                                                                <div className='col-6 text-start'>
+                                                                    <h2>{item.totalTickets}</h2>
+                                                                </div>
+                                                                <div className='col-6 text-end'>
+                                                                    <i className="fa fa-server fs-1 text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-3'>
+                                                        <div className='card bg-info p-3'>
+                                                            <div className='row'>
+                                                                <h4>Unassigned</h4>
+                                                            </div>
+                                                            <div className='row'>
+                                                                <div className='col-6 text-start'>
+                                                                    <h2>{item.totalAssignedTickets}</h2>
+                                                                </div>
+                                                                <div className='col-6 text-end'>
+                                                                    <i className="fa fa-line-chart fs-1 text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-3'>
+                                                        <div className='card bg-info p-3'>
+                                                            <div className='row'>
+                                                                <h4>Assigned</h4>
+                                                            </div>
+                                                            <div className='row'>
+                                                                <div className='col-6 text-start'>
+                                                                    <h2>{item.totalAssignedTickets}</h2>
+                                                                </div>
+                                                                <div className='col-6 text-end'>
+                                                                    <i className="fa fa-envelope fs-1 text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-3'>
+                                                        <div className='card bg-info p-3'>
+                                                            <div className='row'>
+                                                                <h4>In-Progress</h4>
+                                                            </div>
+                                                            <div className='row'>
+                                                                <div className='col-6 text-start'>
+                                                                    <h2>{item.totalInProgressTickets}</h2>
+                                                                </div>
+                                                                <div className='col-6 text-end'>
+                                                                    <i className="fa fa-globe fs-1 text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-3 mt-4'>
+                                                        <div className='card bg-info p-3'>
+                                                            <div className='row'>
+                                                                <h4>Closed</h4>
+                                                            </div>
+                                                            <div className='row'>
+                                                                <div className='col-6 text-start'>
+                                                                    <h2>{item.totalClosedTickets}</h2>
+                                                                </div>
+                                                                <div className='col-6 text-end'>
+                                                                    <i className="fa fa-times fs-1 text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className='row mt-1'>
-                                                <div className='col-12'>
-                                                    <span className='rounded-circle bg-light p-2'>{value}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 text-end'>
-                                            <i className={fieldIcons[item] || 'fa fa-question'}></i>
-                                            {/* If fieldName doesn't match any icon, use a default icon */}
-                                        </div>
-                                    </div>
+                                            )
+                                        })
+                                    }
                                 </div>
+
+                                {
+                                    EmpRole === 'Department Head' && deptHeadDas.map((item) => {
+                                        return (
+
+                                            <div className='row'>
+                                                <div className='col-3'>
+                                                    <div className='card bg-info p-3'>
+                                                        <div className='row'>
+                                                            <h4>Total Employees</h4>
+                                                        </div>
+                                                        <div className='row'>
+                                                            <div className='col-6 text-start'>
+                                                                <h2>{item.totalEmployees}</h2>
+                                                            </div>
+                                                            <div className='col-6 text-end'>
+                                                                <i class="fa fa-user fs-1 text-white"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className='col-3'>
+                                                    <div className='card bg-info p-3'>
+                                                        <div className='row'>
+                                                            <h4>Total Tickets</h4>
+                                                        </div>
+                                                        <div className='row'>
+                                                            <div className='col-6 text-start'>
+                                                                <h2>{item.totalTickets}</h2>
+                                                            </div>
+                                                            <div className='col-6 text-end'>
+                                                                <i class="fa fa-server fs-1 text-white"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className='col-3'>
+                                                    <div className='card bg-info p-3'>
+                                                        <div className='row'>
+                                                            <h4>Un-Assigned</h4>
+                                                        </div>
+                                                        <div className='row'>
+                                                            <div className='col-6 text-start'>
+                                                                <h2>{item.totalUnAssignedTickets}</h2>
+                                                            </div>
+                                                            <div className='col-6 text-end'>
+                                                                <i class="fa fa-line-chart fs-1 text-white"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className='col-3'>
+                                                    <div className='card bg-info p-3'>
+                                                        <div className='row'>
+                                                            <h4>Assigned    </h4>
+                                                        </div>
+                                                        <div className='row'>
+                                                            <div className='col-6 text-start'>
+                                                                <h2>{item.totalAssignedTickets}</h2>
+                                                            </div>
+                                                            <div className='col-6 text-end'>
+                                                                <i class="fa fa-envelope fs-1 text-white"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className='col-12 mt-4'>
+                                                    <div className='row'>
+                                                        <div className='col-3'>
+                                                            <div className='card bg-info p-3'>
+                                                                <div className='row'>
+                                                                    <h4>In-Progress</h4>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='col-6 text-start'>
+                                                                        <h2>{item.totalInProgressTickets}</h2>
+                                                                    </div>
+                                                                    <div className='col-6 text-end'>
+                                                                        <i class="fa fa-globe fs-1 text-white"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col-3'>
+                                                            <div className='card bg-info p-3'>
+                                                                <div className='row'>
+                                                                    <h4>Closed</h4>
+                                                                </div>
+                                                                <div className='row'>
+                                                                    <div className='col-6 text-start'>
+                                                                        <h2>{item.totalClosedTickets}</h2>
+                                                                    </div>
+                                                                    <div className='col-6 text-end'>
+                                                                        <i className="fa fa-times fs-1 text-white"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+
+                                    })
+                                }
+
+                                {
+                                    EmpRole === 'Admin Department Employee' && empAdminDash.map((item) => {
+                                        return (<div className='row'>
+                                            <div className='col-3'>
+                                                <div className='card bg-info p-3'>
+                                                    <div className='row'>
+                                                        <h4>Total Tickets</h4>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-6 text-start'>
+                                                            <h2>{item.totalTickets}</h2>
+                                                        </div>
+                                                        <div className='col-6 text-end'>
+                                                            <i class="fa fa-server fs-1 text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-3'>
+                                                <div className='card bg-info p-3'>
+                                                    <div className='row'>
+                                                        <h4>Assigned</h4>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-6 text-start'>
+                                                            <h2>{item.totalAssignedTickets}</h2>
+                                                        </div>
+                                                        <div className='col-6 text-end'>
+                                                            <i class="fa fa-envelope fs-1 text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-3'>
+                                                <div className='card bg-info p-3'>
+                                                    <div className='row'>
+                                                        <h4>In-Progress</h4>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-6 text-start'>
+                                                            <h2>{item.totalInProgressTickets}</h2>
+                                                        </div>
+                                                        <div className='col-6 text-end'>
+                                                            <i class="fa fa-globe fs-1 text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-3'>
+                                                <div className='card bg-info p-3'>
+                                                    <div className='row'>
+                                                        <h4>Closed</h4>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-6 text-start'>
+                                                            <h2>{item.totalClosedTickets}</h2>
+                                                        </div>
+                                                        <div className='col-6 text-end'>
+                                                            <i className="fa fa-times fs-1 text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>)
+                                    })
+
+                                }
+
+                                {
+                                    EmpRole === 'Super Admin' && superAdminDash.map((item) => {
+                                        return (<div className='row'>
+                                            <div className='col-3'>
+                                                <div className='card bg-info p-3'>
+                                                    <div className='row'>
+                                                        <h4>Total Employees</h4>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-6 text-start'>
+                                                            <h2>{item.totalEmployees}</h2>
+                                                        </div>
+                                                        <div className='col-6 text-end'>
+                                                            <i class="fa fa-user fs-1 text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-3'>
+                                                <div className='card bg-info p-3'>
+                                                    <div className='row'>
+                                                        <h4>Total Departments</h4>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-6 text-start'>
+                                                            <h2>{item.totalDepartments}</h2>
+                                                        </div>
+                                                        <div className='col-6 text-end'>
+                                                            <i class="fa fa-id-card fs-1 text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-3'>
+                                                <div className='card bg-info p-3'>
+                                                    <div className='row'>
+                                                        <h4>Total Tickets</h4>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-6 text-start'>
+                                                            <h2>{item.totalTickets}</h2>
+                                                        </div>
+                                                        <div className='col-6 text-end'>
+                                                            <i class="fa fa-server fs-1 text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-3'>
+                                                <div className='card bg-info p-3'>
+                                                    <div className='row'>
+                                                        <h4>Un-Assigned</h4>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className='col-6 text-start'>
+                                                            <h2>{item.totalUnAssignedTickets}</h2>
+                                                        </div>
+                                                        <div className='col-6 text-end'>
+                                                            <i class="fa fa-line-chart fs-1 text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-12 mt-4'>
+                                                <div className='row'>
+                                                    <div className='col-3'>
+                                                        <div className='card bg-info p-3'>
+                                                            <div className='row'>
+                                                                <h4>Assigned</h4>
+                                                            </div>
+                                                            <div className='row'>
+                                                                <div className='col-6 text-start'>
+                                                                    <h2>{item.totalAssignedTickets}</h2>
+                                                                </div>
+                                                                <div className='col-6 text-end'>
+                                                                    <i className="fa fa-envelope fs-1 text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-3'>
+                                                        <div className='card bg-info p-3'>
+                                                            <div className='row'>
+                                                                <h4>In-Progress</h4>
+                                                            </div>
+                                                            <div className='row'>
+                                                                <div className='col-6 text-start'>
+                                                                    <h2>{item.totalInProgressTickets}</h2>
+                                                                </div>
+                                                                <div className='col-6 text-end'>
+                                                                    <i className="fa fa-globe fs-1 text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-3'>
+                                                        <div className='card bg-info p-3'>
+                                                            <div className='row'>
+                                                                <h4>Closed</h4>
+                                                            </div>
+                                                            <div className='row'>
+                                                                <div className='col-6 text-start'>
+                                                                    <h2>{item.totalClosedTickets}</h2>
+                                                                </div>
+                                                                <div className='col-6 text-end'>
+                                                                    <i className="fa fa-times fs-1 text-white"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>)
+                                    })
+                                }
                             </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
+
+
             </div>
         </div>
     );

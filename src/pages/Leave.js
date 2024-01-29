@@ -109,12 +109,12 @@ const onEditLeave = (employeeId) => {
                 <div className='row'>
                     <div className='col-lg-8 col-md-12'>
                         <div className='card'>
-                            <div className='card-header bg-success'>
+                            <div className='card-header' style={{backgroundColor:'#03748A'}}>
                                 <strong className='text-white'>  Leave List</strong>
                             </div>
                             <div className='card-body'>
                                 <div className='table-responsive'>
-                                    <table className='table table-bordered'>
+                                    <table className='table table-bordered table-striped'>
                                         <thead>
                                             <tr>
                                                 <th>Sr No</th>
@@ -164,7 +164,7 @@ const onEditLeave = (employeeId) => {
                     </div>
                     <div className='col-lg-4 col-md-12'>
                         <div className='card'>
-                            <div className='card-header bg-success'>
+                            <div className='card-header' style={{backgroundColor:'#03748A'}}>
                                 <strong className='text-white'>   Add Leave</strong>
                             </div>
                             <div className='card-body'>
@@ -238,7 +238,7 @@ const onEditLeave = (employeeId) => {
                                     </div>
                                     <div className='col-6 text-end'>
                                         {
-                                            leaveobj.leaveId === 0 && <button className='btn btn-primary ' onClick={addAllLeave}>Add Leave</button>
+                                            leaveobj.leaveId === 0 && <button className='btn btn-success ' onClick={addAllLeave}>Add Leave</button>
                                         }
                                         {
                                             leaveobj.leaveId !== 0 && <button className='btn btn-sm btn-warning p-2' > Update Leave</button>

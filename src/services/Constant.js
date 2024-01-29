@@ -21,10 +21,16 @@ export const DELETE_TICKET = "DeleteTicket?id=";
 export const GET_ALL_ROLE = "GetAllRoles";
 
 export const GET_SUPER_ADMIN = "GetSuperAdminDashboard";
-
+export const GET_EMP_DASH = "getEmployeeDashByEmpId?empId=";
+export const GET_DEPT_HEAD_DASH = "GetDeptHeadDashboardByDeptHead?deptHeadEmpId=";
+export const GET_ADMIN_EMP_DASH = "getAdminEmployeeDashByEmpId?empId";
 ///ticket
 export const SHOW_TICKET_CREATED_BY_EMI_ID = "GetTicketsCreatedByEmpId?empId=";
 export const SHOW_NEW_TICKET_BY_EMP = "getNewTickets?deptHeadEmpId=";
-export const SHOW_ASSIGN_TICKET_BY_EMP_ID = "";
+export const SHOW_ASSIGN_TICKET_BY_EMP_ID = "GetAssignedTicketsByEmpId?empId=";
 
 export const GET_EMP_BY_DEPT_ID = "GetEmployeesByDeptId?id=";
+export const GET_ASSIGN_REQUEST = "AssignRequest";
+
+export const START_TICKET = "startTicket?id=";
+export const CLOSE_TICKET = "closeTicket?id=";
