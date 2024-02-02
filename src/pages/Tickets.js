@@ -13,7 +13,7 @@ const Tickets = () => {
     let [TicketData, setTicketDataList] = useState([]);
     let [deptlist, setDeptList] = useState([])
     let [empData, setEmpData] = useState([]);
-
+    // const ticketstatuslist = ['Un-Assigned', 'Assigned', 'In-Progress', 'Closed'];
     /////////////////////////////////////////////////////
 
 
@@ -40,7 +40,7 @@ const Tickets = () => {
         }
         getAssignRequest(ticketobj).then((data) => {
             if (data.result) {
-                alert("Ticket Added Successfully")
+                alert("Ticket Assign Successfully")
             } else {
                 alert(data.message)
             }
@@ -149,9 +149,13 @@ const Tickets = () => {
 
     //start Ticket
     const onStartTicket = (id) => {
+        debugger;
         startTicket(id).then((data) => {
+            debugger;
             if (data.result) {
+                debugger;
                 alert("Ticket Started");
+                debugger;
                 showNewTicketByEmpId();
             }
             else {
@@ -217,7 +221,7 @@ const Tickets = () => {
                         {/*  */}
 
                         <div className="card">
-                            <div className="card-header  text-white" style={{backgroundColor:'#03748A'}}>
+                            <div className="card-header  text-white" style={{ backgroundColor: '#03748A' }}>
                                 <div className="row">
                                     <div className="col-md-6 text-start">
                                         <strong>Ticket List</strong>
@@ -228,8 +232,7 @@ const Tickets = () => {
                                 </div>
                             </div>
                             <div className="card-body">
-                                {EmpRole === 'Employee' && (
-                                    <div className="row">
+                                {EmpRole === 'Employee' && (<div className="row">
                                         {TicketData.map((item) => (
                                             <div className="col-md-4" >
                                                 <div className="card mb-4 bg-light">
@@ -267,8 +270,7 @@ const Tickets = () => {
                                     </div>
                                 )}
 
-                                {EmpRole === 'Department Head' && (
-                                    <div className="row">
+                                {EmpRole === 'Department Head' && (<div className="row">
                                         {TicketData.map((item, index) => (
                                             <div className="col-md-4" key={index}>
                                                 <div className="card mb-4 bg-light">
@@ -323,8 +325,7 @@ const Tickets = () => {
                                     </div>
                                 )}
 
-                                {EmpRole === 'Admin Department Employee' && (
-                                    <div className="row">
+                                {EmpRole === 'Admin Department Employee' && (<div className="row">
                                         {TicketData.map((item, index) => (
                                             <div className="col-md-4" key={index}>
                                                 <div className="card mb-4 bg-light">
@@ -371,10 +372,75 @@ const Tickets = () => {
                                                         </div>
 
 
+                                                        {/* <div class="row">
+                                                            <div class="col-12 d-flex flex-row">
+                                                                <div class="progress w-100">
+                                                                    <ol class="ProgressBar">
+                                                                        {ticketstatuslist.map((status, index) => (
+                                                                            <li class="ProgressBar-step" style={{ width: `${100 / ticketstatuslist.length}%` }}>
+                                                                                <div class="step">
+                                                                                    <div class="step-circle" style={{ backgroundColor: status === 'Closed' ? 'red' : 'black' }}>{index + 1}</div>
+                                                                                    <span class="step-label">{status}</span>
+                                                                                </div>
+                                                                                {index !== ticketstatuslist.length - 1 && <div class="progress-bar"></div>}
+                                                                            </li>
+                                                                        ))}
+                                                                    </ol>
+                                                                </div>
+                                                            </div>
+                                                        </div> */}
+
+                                                        <div class="row d-flex flex-row">
+                                                            {/* <div class="col-md-12">
+                                                                <ul class="stepper stepper-horizontal d-flex flex-row">
+                                                                    {ticketstatuslist.map((status, index) => (
+                                                                        <li class="ProgressBar-step" style={{ width: `${100 / ticketstatuslist.length}%` }}>
+                                                                            <div class="step">
+                                                                                <div class="step-circle" style={{ backgroundColor: status === 'Closed' ? 'red' : 'black' }}>{index + 1}</div>
+                                                                                <span class="step-label">{status}</span>
+                                                                            </div>
+                                                                            {index !== ticketstatuslist.length - 1 && <div class="progress-bar"></div>}
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            </div> */}
+                                                            <div className='col-12'>
+                                                                <div class="md-stepper-horizontal orange">
+                                                                    <div class="row">
+                                                                        <div class="col md-step">
+                                                                            <div class="md-step-circle" style={{ backgroundColor: item.state === 'Un-Assigned' ? 'orange' : 'gray' }}><span></span></div>
+                                                                            <div class="md-step-title" style={{ color: item.state === 'Un-Assigned' ? 'orange' : 'gray' }}>Un-Assigned</div>
+                                                                            <div class="md-step-bar-right"></div>
+                                                                        </div>
+                                                                        <div class="col md-step active">
+                                                                            <div class="md-step-circle" style={{ backgroundColor: item.state == 'Assigned' ? 'orange' : 'gray' }}><span></span></div>
+                                                                            <div class="md-step-title" style={{ color: item.state === 'Assigned' ? 'orange' : 'gray' }}>Assigned</div>
+                                                                            <div class="md-step-bar-left"></div>
+                                                                            <div class="md-step-bar-right"></div>
+                                                                        </div>
+                                                                        <div class="col md-step">
+                                                                            <div class="md-step-circle" style={{ backgroundColor: item.state == 'In-Progress' ? 'orange' : 'gray' }}><span></span></div>
+                                                                            <div class="md-step-title" style={{ color: item.state === 'In-Progress' ? 'orange' : 'gray' }}>In-Progress</div>
+                                                                            <div class="md-step-bar-left"></div>
+                                                                            <div class="md-step-bar-right"></div>
+                                                                        </div>
+                                                                        <div class="col md-step">
+                                                                            <div class="md-step-circle" style={{ backgroundColor: item.state == 'Closed' ? 'orange' : 'gray' }}><span></span></div>
+                                                                            <div class="md-step-title" style={{ color: item.state === 'Closed' ? 'orange' : 'gray' }}>Closed</div>
+                                                                            <div class="md-step-bar-left"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
 
 
                                                     </div>
                                                 </div>
+
                                             </div>
                                         ))}
                                     </div>
@@ -392,7 +458,7 @@ const Tickets = () => {
                     <div className="modal fade" id="myModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog modal-lg">
                             <div className="modal-content">
-                                <div className='modal-header text-white' style={{backgroundColor:'#03748A'}}>
+                                <div className='modal-header text-white' style={{ backgroundColor: '#03748A' }}>
                                     <h5 className='modal-title'>Add Ticket</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>

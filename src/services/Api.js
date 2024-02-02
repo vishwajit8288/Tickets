@@ -73,7 +73,7 @@ const updateEmployee = async (obj) => {
         alert(error.code)
     }
 }
-
+///for super admin
 const getLeaveData = async () => {
     const result = await axios.get(ApiUrl + Constant.GET_LEAVE_DATA);
     return result.data
@@ -182,8 +182,8 @@ const getAdminEmpDashData = async (id) => {
 
 const startTicket = async (id) => {
     try {
-        const result = await axios.post(ApiUrl + Constant.START_TICKET+ id);
-        return result.data
+        const result = await axios.post(ApiUrl + Constant.START_TICKET + id);
+        return result.data.data
     } catch (error) {
         alert(error.code)
     }
@@ -191,12 +191,36 @@ const startTicket = async (id) => {
 }
 const closeTicket = async (id) => {
     try {
-        const result = await axios.post(ApiUrl + Constant.CLOSE_TICKET+ id);
+        const result = await axios.post(ApiUrl + Constant.CLOSE_TICKET + id);
         return result.data
     } catch (error) {
         alert(error.code)
     }
 }
-export { getEmpDashboard, getDeptHeadDashData, getAdminEmpDashData, getLogin, getDeptList, addDepartment, updateDepartmant, onDeleteDepartment, getRoleList, addEmployee, editEmpData, deleteEmpData, updateEmployee, getEmpList, getLeaveData, addLeave, editLeaveData, addTicket, getTicket, getSuperAdmin, getTicketById, getNewTickets, getAssignedTickets, GetEmployeesByDeptId, getAssignRequest,startTicket,closeTicket }
+
+const getLeaveForApprovel = async (id) => {
+    const result = await axios.get(ApiUrl + Constant.GET_LEAVE_FOR_APPROVEL + id);
+    return result.data
+}
+const approvelLeave = async (id) => {
+    const result = await axios.get(ApiUrl + Constant.FOR_APPROVEL_LEAVE + id);
+    return result.data
+}
+const rejectLeave = async (id) => {
+    const result = await axios.get(ApiUrl + Constant.FOR_REJECT_LEAVE + id);
+    return result.data
+}
+const getAllLeaveByEmp = async (id) => {
+    const result = await axios.get(ApiUrl + Constant.GET_ALL_LEAVE_BY_EMP + id);
+    return result.data
+}
+export {
+    getEmpDashboard, getDeptHeadDashData, getAdminEmpDashData, getLogin, getDeptList, addDepartment, updateDepartmant, onDeleteDepartment, getRoleList,
+    addEmployee, editEmpData, deleteEmpData, updateEmployee, getEmpList,
+    getLeaveData, addLeave, editLeaveData, addTicket, getTicket, getSuperAdmin,
+    getTicketById, getNewTickets, getAssignedTickets, GetEmployeesByDeptId,
+    getAssignRequest, startTicket, closeTicket, getLeaveForApprovel, approvelLeave,
+    rejectLeave, getAllLeaveByEmp
+}
 
 

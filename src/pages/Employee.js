@@ -11,6 +11,8 @@ const Employee = () => {
     let [isShowForm, setisShowForm] = useState(false);
     let [isShowCard, setisShowCard] = useState(false);
 
+
+
     let [empobj, setEmpObj] = useState({
         "employeeId": 0,
         "employeeName": "",
@@ -21,6 +23,29 @@ const Employee = () => {
         "role": "",
         "gender": ""
     })
+
+    // const [searchTerm, setSearchTerm] = useState('');
+    // const search = () => {
+    //     const searchTermValue = searchTerm.toLowerCase();
+    //     const filteredList = emplist.filter((employee) => (
+    //         (employee.employeeName && employee.employeeName.toLowerCase().includes(searchTermValue)) ||
+    //         (employee.contactNo && employee.contactNo.includes(searchTermValue)) ||
+    //         (employee.emailId && employee.emailId.toLowerCase().includes(searchTermValue)) ||
+    //         (employee.role && employee.role.toLowerCase().includes(searchTermValue))
+    //     ));
+
+    //     // Handle or display filteredList directly as needed.
+    //     // For example, you might update the UI or perform other operations with the filtered data.
+    //     console.log(filteredList);
+    // };
+
+    // useEffect(() => {
+    //     // ... other logic
+    // }, [searchTerm, emplist]);
+
+
+
+
 
     useEffect(() => {
         showAllEmpData();
@@ -149,6 +174,9 @@ const Employee = () => {
     const showTable = () => {
         setisShowCard(false);
     }
+
+   
+
     return (
         <div>
             <div className='container-fluid'>
@@ -162,27 +190,40 @@ const Employee = () => {
                         <div className='card'>
                             <div className='card-header' style={{ backgroundColor: '#03748A' }}>
                                 <div className='row'>
-                                    <div className='col-6 text-start'>
+                                    <div className='col-4 text-start'>
                                         <strong className='text-white'>Employee List</strong>
                                     </div>
-                                    
-                                    <div className='col-4 text-end ps-0 '>
-                                        {
-                                            !isShowCard && <button className='btn btn-body p-0 outline' onClick={showCard}>
-                                                <i class="fa fa-th fa-lg text-white" aria-hidden="true"></i>
-                                            </button>
-                                        }
-                                        {
-                                            isShowCard && <button className='btn btn-body p-0 outline' onClick={showTable}>
-                                                <i class="fa fa-table fa-lg text-white" aria-hidden="true"></i>
-                                            </button>
-                                        }
 
-                                    </div>
-                                    <div className='col-2 text-end'>
-                                        <button className='btn btn-danger border-0' style={{ outline: 'none' }} onClick={showForm}>Add Data</button>
+                                    <div className='col-lg-8 d-flex justify-content-end'>
+                                        <div className='row'>
+                                            <div className='col-md-6'>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon"/>
+                                                    <button className="btn btn-success" type="button"><i class="fa fa-search"></i></button>
+
+                                                </div>
+                                            </div>
+
+                                            <div className='col-md-2'>
+                                                {
+                                                    !isShowCard && <button class='btn btn-body  ' onClick={showCard}>
+                                                        <i class="fa fa-th fa-lg text-white" aria-hidden="true"></i>
+                                                    </button>
+                                                }
+                                                {
+                                                    isShowCard && <button class='btn btn-body' onClick={showTable}>
+                                                        <i class="fa fa-table fa-lg text-white" aria-hidden="true"></i>
+                                                    </button>
+                                                }
+                                            </div>
+
+                                            <div className='col-md-4'>
+                                                <button class='btn btn-danger border-0' style={{ outline: 'none' }} onClick={showForm}>Add Data</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             {
@@ -241,25 +282,27 @@ const Employee = () => {
                                                 return (
                                                     <div className='col-4'>
                                                         <div className='card card-margin mb-4 bg-body-tertiary'>
+                                                            <div className='card-header bg-info'><strong>Employee Name</strong> - {item.employeeName}</div>
                                                             <div className='card-body'>
                                                                 <div className='row'>
-                                                                    <div className='col-3 d-flex align-items-center p-1'>
-                                                                        <div class="circle bg-info-subtle text-black"><strong>{index + 1}</strong></div>
+                                                                    <div className='col-2'>
+                                                                        <strong>{index + 1}</strong>
                                                                     </div>
-                                                                    <div className='col-9'>
-                                                                        <strong>Employee Name</strong> - {item.employeeName}
-                                                                        <br></br>
 
-                                                                        <strong>Department Name</strong> - {item.deptName}
-                                                                        <br></br>
+                                                                    <div className='col-6'><strong>Department Name</strong> - {item.deptName}
+                                                                    </div>
+
+                                                                    <div className='col-4'>
                                                                         <strong>Contact No</strong> - {item.contactNo}
-                                                                        <br></br>
-                                                                        <strong>Role</strong> - {item.role}
-                                                                        <br></br>
                                                                     </div>
                                                                 </div>
                                                                 <div className='row mt-3'>
-                                                                    <div className={`col-2 text-end ${isShowForm ? 'offset-6' : 'offset-7'}`}>
+                                                                    <div className='col-9'>
+                                                                        <strong>Role</strong> - {item.role}
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row mt-3'>
+                                                                    <div className={`col-2 text-end ${isShowForm ? 'offset-6' : 'offset-2'}`}>
                                                                         <td><button className='btn btn-sm btn-primary' onClick={() => { onEditEmp(item.employeeId) }} ><i className='fa fa-pencil'></i></button> </td>
 
                                                                     </div>
@@ -420,6 +463,9 @@ const Employee = () => {
                     </div>
 
                 </div>
+
+
+              
             </div>
 
         </div >

@@ -11,7 +11,7 @@ const Header = () => {
         const userInfo = localStorage.getItem('loginObj');
         if (userInfo !== null) {
         }
-    },[]);
+    }, []);
 
     const logout = () => {
         localStorage.removeItem('loginObj');
@@ -27,7 +27,7 @@ const Header = () => {
                             <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
                                 <div className="container-fluid">
 
-                                    {userInfo && (userInfo.role === "Employee" || userInfo.role === "Admin Department Employee" || userInfo.role === "Department Head") && (
+                                    {userInfo && (userInfo.role === "Employee") && (
                                         <ul className="navbar-nav">
 
                                             <>
@@ -37,6 +37,46 @@ const Header = () => {
                                                 <li className="nav-item">
                                                     <Link className="nav-link" to="/ticket">Ticket</Link>
                                                 </li>
+                                                <li className="nav-item">
+                                                    <Link className="nav-link" to="/leave">Leave</Link>
+                                                </li>
+                                                {/* <li className="nav-item">
+                                                    <Link className="nav-link" to="/approve">Leave For Approve</Link>
+                                                </li> */}
+                                            </>
+                                        </ul>
+                                    )}
+
+
+                                    {userInfo && (userInfo.role === "Department Head") && (
+                                        <ul className="navbar-nav">
+
+                                            <>
+                                                <li className="nav-item">
+                                                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <Link className="nav-link" to="/ticket">Ticket</Link>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <Link className="nav-link" to="/leave">Leave</Link>
+                                                </li>
+                                            </>
+                                        </ul>
+                                    )}
+
+                                    {userInfo && (userInfo.role === "Admin Department Employee") && (
+                                        <ul className="navbar-nav">
+
+                                            <>
+                                                <li className="nav-item">
+                                                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <Link className="nav-link" to="/ticket">Ticket</Link>
+                                                </li>
+                                              
+                                              
                                             </>
                                         </ul>
                                     )}
@@ -64,7 +104,7 @@ const Header = () => {
                                             </>
                                         </ul>
                                     )}
-                                    
+
                                     <div className="row d-flex align-items-center">
                                         <div className="col-8">
                                             {userInfo && userInfo.emailId && (

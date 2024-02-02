@@ -34,3 +34,8 @@ export const GET_ASSIGN_REQUEST = "AssignRequest";
 
 export const START_TICKET = "startTicket?id=";
 export const CLOSE_TICKET = "closeTicket?id=";
+
+export const GET_LEAVE_FOR_APPROVEL = "GetLeavesForApprovalBySuperwiserId?id=";
+export const FOR_APPROVEL_LEAVE = "ApproveLeave?id=";
+export const FOR_REJECT_LEAVE = "RejectLeave?id=";
+export const GET_ALL_LEAVE_BY_EMP = "GetAllLeavesByEmployeeId?id=";

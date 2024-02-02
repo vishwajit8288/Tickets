@@ -7,6 +7,7 @@ import Employee from '../pages/Employee';
 import Leave from '../pages/Leave';
 import Dashboard from '../pages/Dashboard';
 import Tickets from '../pages/Tickets';
+import LeaveForApprovel from '../pages/LeaveForApprovel';
 const AppRoutes = () => {
     return (
         <div>
@@ -22,6 +23,8 @@ const AppRoutes = () => {
                             <Route path='leave' element={<Leave></Leave>}></Route>
                             <Route path='ticket' element={<Tickets></Tickets>}></Route>
                             <Route path='dashboard' element={<Dashboard></Dashboard>}></Route>
+
+                            <Route path='approve' element={<LeaveForApprovel></LeaveForApprovel>}></Route>
 
                         </Routes>
                     

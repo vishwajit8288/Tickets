@@ -11,3 +11,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.md-step {
+  display: table-cell;
+  position: relative;
+  padding: 5px;
+}
+
+.md-step-circle {
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.md-step-title {
+  text-align: center;
+}
+
+
+.md-step-bar-right {
+  position: absolute;
+  top: 15px;
+  border-top: 2px solid gray;
+  right: 0;
+  left: 50%;
+  margin-left: 20px;
+}
+
+.md-step-bar-left {
+  position: absolute;
+  top: 15px;
+  border-top: 2px solid gray;
+  left: 0;
+  right: 50%;
+  margin-right: 20px;
+}
+
+.boxes .col-3 .card{
+  box-shadow: 10px 10px 17px 2px rgb(255, 247, 0);
+}

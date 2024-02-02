@@ -8,6 +8,11 @@ const Department = () => {
     let [isShowForm, setisShowForm] = useState(false);
     let [isShowCard, setisShowCard] = useState(false);
 
+
+    const isLoggedIn = localStorage.getItem('loginObj');
+    const userInfo = JSON.parse(isLoggedIn)
+    const id = userInfo.employeeId;
+    const depId = userInfo.deptId;
     let [deptobj, setDeptObj] = useState({
         "deptId": 0,
         "deptName": "",
@@ -31,7 +36,6 @@ const Department = () => {
     const showAllDeptHead = () => {
         getEmpList().then((data) => {
             setDeptHead(data.data)
-
         })
     }
     const addDept = () => {
@@ -137,27 +141,32 @@ const Department = () => {
                         <div className='card'>
                             <div className='card-header' style={{ backgroundColor: '#03748A' }}>
                                 <div className='row'>
-                                    <div className='col-6 text-start'>
+                                    <div className='col-md-6 text-start'>
                                         <strong className='text-white'>Department List</strong>
                                     </div>
-                                    <div className='col-4 text-end ps-0'>
-                                        {
-                                            !isShowCard && <button className='btn btn-body p-0 outline' onClick={showCard}>
-                                                <i class="fa fa-th fa-lg text-white" aria-hidden="true"></i>
-                                            </button>
-                                        }
-                                        {
-                                            isShowCard && <button className='btn btn-body p-0 outline' onClick={showTable}>
-                                                <i class="fa fa-table fa-lg text-white" aria-hidden="true"></i>
-                                            </button>
-                                        }
 
+                                    <div className='col-md-6 text-end'>
+                                        {!isShowCard && (
+                                            <button className='btn btn-body p-0 outline' onClick={showCard}>
+                                                <i className="fa fa-th fa-lg text-white" aria-hidden="true"></i>
+                                            </button>
+                                        )}
+
+                                        {isShowCard && (
+                                            <button className='btn btn-body p-0 outline' onClick={showTable}>
+                                                <i className="fa fa-table fa-lg text-white" aria-hidden="true"></i>
+                                            </button>
+                                        )}
+
+                                        <button className='btn btn-danger border-0 ms-md-2' style={{ marginLeft: '8px', outline: 'none' }} onClick={showForm}>
+                                            Add Data
+                                        </button>
                                     </div>
-                                    <div className='col-2 text-end'>
-                                        <button className='btn btn-danger border-0  ' style={{ outline: 'none' }}  onClick={showForm}>Add Data</button>
-                                    </div>
+
 
                                 </div>
+
+
                             </div>
                             {
                                 !isShowCard && <div className='card-body'>
@@ -228,7 +237,7 @@ const Department = () => {
                                                             <div className='card-body'>
                                                                 <div className='row'>
                                                                     <div className='col-4'>
-                                                                        <div class="circle bg-info text-dark rounded-pill p-1"><strong>{index + 1}</strong></div>
+                                                                        <div class="text-dark  p-1"><strong>{index + 1}</strong></div>
                                                                     </div>
                                                                     <div className='col-8 text-center' style={{ fontSize: '16px' }}>
                                                                         <strong>Created Date</strong> - {item.createdDate}
