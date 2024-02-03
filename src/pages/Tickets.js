@@ -232,147 +232,148 @@ const Tickets = () => {
                                 </div>
                             </div>
                             <div className="card-body">
-                                {EmpRole === 'Employee' && (<div className="row">
-                                        {TicketData.map((item) => (
-                                            <div className="col-md-4" >
-                                                <div className="card mb-4 bg-light">
-                                                    <div className="card-header bg-info">
-                                                        <i className="fa fa-ticket me-2"></i>
-                                                        <strong>{item.ticketNo}</strong>
-                                                    </div>
-                                                    <div className="card-body">
-                                                        <div className="row">
-                                                            <div className="col-md-6 text-start">
-                                                                <strong>Dept Name</strong> - {item.deptName}
-                                                            </div>
 
-                                                            <div className="col-md-6">
-                                                                <strong>Created Date</strong> - {item.createdDate}
-                                                            </div>
+                                {EmpRole === 'Employee' && (<div className="row">
+                                    {TicketData.map((item) => (
+                                        <div className="col-md-4" >
+                                            <div className="card mb-4 bg-light">
+                                                <div className="card-header bg-info">
+                                                    <i className="fa fa-ticket me-2"></i>
+                                                    <strong>{item.ticketNo}</strong>
+                                                </div>
+                                                <div className="card-body">
+                                                    <div className="row">
+                                                        <div className="col-md-6 text-start">
+                                                            <strong>Dept Name</strong> - {item.deptName}
                                                         </div>
-                                                        <div className="row">
-                                                            <div className="col-md-6 text-start">
-                                                                <strong>Contact</strong> - {item.contactNo}
-                                                            </div>
-                                                            <div className="col-md-6">
-                                                                <strong>Expected End Date</strong> - {item.expectedEndDate}
-                                                            </div>
+
+                                                        <div className="col-md-6">
+                                                            <strong>Created Date</strong> - {item.createdDate}
                                                         </div>
-                                                        <div className="row mt-3">
-                                                            <div className="col-md-6">
-                                                                <span className="text-danger text-start">{item.state}</span>
-                                                            </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-md-6 text-start">
+                                                            <strong>Contact</strong> - {item.contactNo}
+                                                        </div>
+                                                        <div className="col-md-6">
+                                                            <strong>Expected End Date</strong> - {item.expectedEndDate}
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-md-6">
+                                                            <span className="text-danger text-start">{item.state}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
-                                    </div>
+                                        </div>
+                                    ))}
+                                </div>
                                 )}
 
                                 {EmpRole === 'Department Head' && (<div className="row">
-                                        {TicketData.map((item, index) => (
-                                            <div className="col-md-4" key={index}>
-                                                <div className="card mb-4 bg-light">
-                                                    <div className="card-header px-3 bg-info">
-                                                        <i className="fa fa-ticket me-2"></i>
-                                                        <strong>{item.ticketNo}</strong>
-                                                    </div>
-                                                    <div className="card-body">
-                                                        <div className="row">
-                                                            {/* <div className="col-md-3 d-flex align-items-center p-1">
+                                    {TicketData.map((item, index) => (
+                                        <div className="col-md-4" key={index}>
+                                            <div className="card mb-4 bg-light">
+                                                <div className="card-header px-3 bg-info">
+                                                    <i className="fa fa-ticket me-2"></i>
+                                                    <strong>{item.ticketNo}</strong>
+                                                </div>
+                                                <div className="card-body">
+                                                    <div className="row">
+                                                        {/* <div className="col-md-3 d-flex align-items-center p-1">
                                                                 <div className="circle bg-info-subtle text-black"><strong>{index + 1}</strong></div>}
                                                             </div> */}
-                                                            <div className="col-md-6 text-start">
-                                                                <i className='fa fa-user fa-lg'></i> - {item.employeeName}
-                                                            </div>
-                                                            <div className="col-md-6 text-start">
-                                                                <strong>Created Date</strong> - {item.createdDate}
-                                                            </div>
+                                                        <div className="col-md-6 text-start">
+                                                            <i className='fa fa-user fa-lg'></i> - {item.employeeName}
                                                         </div>
-                                                        <div className='row'>
-                                                            <div className="col-md-6 text-start"><i className='fa fa-exclamation-triangle fa-lg'></i> - {item.severity}
-                                                            </div>
-                                                            <div className="col-md-6 text-start">
-                                                                <strong>Expected End Date</strong> - {item.expectedEndDate}
-                                                            </div>
+                                                        <div className="col-md-6 text-start">
+                                                            <strong>Created Date</strong> - {item.createdDate}
                                                         </div>
-                                                        <div className='row'>
-                                                            <div className="col-md-6 text-start">
-                                                                <strong>Severity</strong> - {item.severity}
-                                                            </div>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className="col-md-6 text-start"><i className='fa fa-exclamation-triangle fa-lg'></i> - {item.severity}
                                                         </div>
+                                                        <div className="col-md-6 text-start">
+                                                            <strong>Expected End Date</strong> - {item.expectedEndDate}
+                                                        </div>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className="col-md-6 text-start">
+                                                            <strong>Severity</strong> - {item.severity}
+                                                        </div>
+                                                    </div>
 
-                                                        <div className="row">
-                                                            <div className="col-md-6">
-                                                                <strong>Employee</strong>
-                                                                <select className="form-select" aria-label="Default select example" onChange={(event) => getTicketRequest(event, item.ticketId)}>
-                                                                    <option value="">Select Employee</option>
-                                                                    {empData.map((item) => (
-                                                                        <option value={item.employeeId}>{item.employeeName}</option>
-                                                                    ))}
-                                                                </select>
-                                                                {formsubmited && ticketobj.ticketId === '' && <span className="text-danger">Employee Is Required </span>}
-                                                            </div>
-                                                            <div className="col-md-6 mt-4">
-                                                                <span className=" text-danger mx-1"><b>{item.state}</b></span>
-                                                            </div>
+                                                    <div className="row">
+                                                        <div className="col-md-6">
+                                                            <strong>Employee</strong>
+                                                            <select className="form-select" aria-label="Default select example" onChange={(event) => getTicketRequest(event, item.ticketId)}>
+                                                                <option value="">Select Employee</option>
+                                                                {empData.map((item) => (
+                                                                    <option value={item.employeeId}>{item.employeeName}</option>
+                                                                ))}
+                                                            </select>
+                                                            {formsubmited && ticketobj.ticketId === '' && <span className="text-danger">Employee Is Required </span>}
+                                                        </div>
+                                                        <div className="col-md-6 mt-4">
+                                                            <span className=" text-danger mx-1"><b>{item.state}</b></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
-                                    </div>
+                                        </div>
+                                    ))}
+                                </div>
                                 )}
 
                                 {EmpRole === 'Admin Department Employee' && (<div className="row">
-                                        {TicketData.map((item, index) => (
-                                            <div className="col-md-4" key={index}>
-                                                <div className="card mb-4 bg-light">
-                                                    <div className="card-header px-3 bg-info">
-                                                        <i className="fa fa-ticket me-2"></i>
-                                                        <strong>{item.ticketNo}</strong>
-                                                    </div>
-                                                    <div className="card-body">
-                                                        <div className="row">
-                                                            {/* <div className="col-md-3 d-flex align-items-center p-1">
+                                    {TicketData.map((item, index) => (
+                                        <div className="col-md-4" key={index}>
+                                            <div className="card mb-4 bg-light">
+                                                <div className="card-header px-3 bg-info">
+                                                    <i className="fa fa-ticket me-2"></i>
+                                                    <strong>{item.ticketNo}</strong>
+                                                </div>
+                                                <div className="card-body">
+                                                    <div className="row">
+                                                        {/* <div className="col-md-3 d-flex align-items-center p-1">
                                                                 <div className="circle bg-info-subtle text-black"><strong>{index + 1}</strong></div>}
                                                             </div> */}
-                                                            <div className="col-md-6 text-start">
-                                                                <i className='fa fa-user fa-lg'></i> - {item.employeeName}
-                                                            </div>
-                                                            <div className="col-md-6 text-start">
-                                                                <strong>Created Date</strong> - {item.createdDate}
-                                                            </div>
+                                                        <div className="col-md-6 text-start">
+                                                            <i className='fa fa-user fa-lg'></i> - {item.employeeName}
                                                         </div>
-                                                        <div className='row'>
-                                                            <div className="col-md-6 text-start"><i className='fa fa-exclamation-triangle fa-lg'></i> - {item.severity}
-                                                            </div>
-                                                            <div className="col-md-6 text-start">
-                                                                <strong>Expected End Date</strong> - {item.expectedEndDate}
-                                                            </div>
+                                                        <div className="col-md-6 text-start">
+                                                            <strong>Created Date</strong> - {item.createdDate}
                                                         </div>
-
-                                                        <div className="row">
-                                                            <div className="col-md-6  text-start">
-
-                                                                {
-                                                                    item.state == 'Assigned' && <button className='btn btn-warning btn-sm mx-1' onClick={() => onStartTicket(item.ticketId)} >Start Ticket</button>
-                                                                }
-
-
-                                                                {
-                                                                    item.state == 'In-Progress' && <button className='btn btn-danger btn-sm mx-1' onClick={() => onCloseTicket(item.ticketId)}>Close Ticket</button>
-                                                                }
-
-                                                            </div>
-                                                            <div className='col-6'>
-                                                                <span className=" text-danger mx-1"><b>{item.state}</b></span>
-                                                            </div>
+                                                    </div>
+                                                    <div className='row'>
+                                                        <div className="col-md-6 text-start"><i className='fa fa-exclamation-triangle fa-lg'></i> - {item.severity}
                                                         </div>
+                                                        <div className="col-md-6 text-start">
+                                                            <strong>Expected End Date</strong> - {item.expectedEndDate}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="row">
+                                                        <div className="col-md-6  text-start">
+
+                                                            {
+                                                                item.state == 'Assigned' && <button className='btn btn-warning btn-sm mx-1' onClick={() => onStartTicket(item.ticketId)} >Start Ticket</button>
+                                                            }
 
 
-                                                        {/* <div class="row">
+                                                            {
+                                                                item.state == 'In-Progress' && <button className='btn btn-danger btn-sm mx-1' onClick={() => onCloseTicket(item.ticketId)}>Close Ticket</button>
+                                                            }
+
+                                                        </div>
+                                                        <div className='col-6'>
+                                                            <span className=" text-danger mx-1"><b>{item.state}</b></span>
+                                                        </div>
+                                                    </div>
+
+
+                                                    {/* <div class="row">
                                                             <div class="col-12 d-flex flex-row">
                                                                 <div class="progress w-100">
                                                                     <ol class="ProgressBar">
@@ -390,8 +391,8 @@ const Tickets = () => {
                                                             </div>
                                                         </div> */}
 
-                                                        <div class="row d-flex flex-row">
-                                                            {/* <div class="col-md-12">
+                                                    <div class="row d-flex flex-row">
+                                                        {/* <div class="col-md-12">
                                                                 <ul class="stepper stepper-horizontal d-flex flex-row">
                                                                     {ticketstatuslist.map((status, index) => (
                                                                         <li class="ProgressBar-step" style={{ width: `${100 / ticketstatuslist.length}%` }}>
@@ -404,47 +405,53 @@ const Tickets = () => {
                                                                     ))}
                                                                 </ul>
                                                             </div> */}
-                                                            <div className='col-12'>
-                                                                <div class="md-stepper-horizontal orange">
-                                                                    <div class="row">
-                                                                        <div class="col md-step">
-                                                                            <div class="md-step-circle" style={{ backgroundColor: item.state === 'Un-Assigned' ? 'orange' : 'gray' }}><span></span></div>
-                                                                            <div class="md-step-title" style={{ color: item.state === 'Un-Assigned' ? 'orange' : 'gray' }}>Un-Assigned</div>
-                                                                            <div class="md-step-bar-right"></div>
-                                                                        </div>
-                                                                        <div class="col md-step active">
-                                                                            <div class="md-step-circle" style={{ backgroundColor: item.state == 'Assigned' ? 'orange' : 'gray' }}><span></span></div>
-                                                                            <div class="md-step-title" style={{ color: item.state === 'Assigned' ? 'orange' : 'gray' }}>Assigned</div>
-                                                                            <div class="md-step-bar-left"></div>
-                                                                            <div class="md-step-bar-right"></div>
-                                                                        </div>
-                                                                        <div class="col md-step">
-                                                                            <div class="md-step-circle" style={{ backgroundColor: item.state == 'In-Progress' ? 'orange' : 'gray' }}><span></span></div>
-                                                                            <div class="md-step-title" style={{ color: item.state === 'In-Progress' ? 'orange' : 'gray' }}>In-Progress</div>
-                                                                            <div class="md-step-bar-left"></div>
-                                                                            <div class="md-step-bar-right"></div>
-                                                                        </div>
-                                                                        <div class="col md-step">
-                                                                            <div class="md-step-circle" style={{ backgroundColor: item.state == 'Closed' ? 'orange' : 'gray' }}><span></span></div>
-                                                                            <div class="md-step-title" style={{ color: item.state === 'Closed' ? 'orange' : 'gray' }}>Closed</div>
-                                                                            <div class="md-step-bar-left"></div>
-                                                                        </div>
+                                                        <div className='col-12'>
+                                                            <div class="md-stepper-horizontal orange">
+                                                                <div class="row">
+                                                                    <div class="col md-step">
+                                                                        <div class="md-step-circle" style={{ backgroundColor: item.state === 'Un-Assigned' ? 'orange' : 'gray' }}><span></span></div>
+                                                                        <div class="md-step-title" style={{ color: item.state === 'Un-Assigned' ? 'orange' : 'gray' }}>Un-Assigned</div>
+                                                                        <div class="md-step-bar-right"></div>
+                                                                    </div>
+                                                                    <div class="col md-step active">
+                                                                        <div class="md-step-circle" style={{ backgroundColor: item.state == 'Assigned' ? 'orange' : 'gray' }}><span></span></div>
+                                                                        <div class="md-step-title" style={{ color: item.state === 'Assigned' ? 'orange' : 'gray' }}>Assigned</div>
+                                                                        <div class="md-step-bar-left"></div>
+                                                                        <div class="md-step-bar-right"></div>
+                                                                    </div>
+                                                                    <div class="col md-step">
+                                                                        <div class="md-step-circle" style={{ backgroundColor: item.state == 'In-Progress' ? 'orange' : 'gray' }}><span></span></div>
+                                                                        <div class="md-step-title" style={{ color: item.state === 'In-Progress' ? 'orange' : 'gray' }}>In-Progress</div>
+                                                                        <div class="md-step-bar-left"></div>
+                                                                        <div class="md-step-bar-right"></div>
+                                                                    </div>
+                                                                    <div class="col md-step">
+                                                                        <div class="md-step-circle" style={{ backgroundColor: item.state == 'Closed' ? 'orange' : 'gray' }}><span></span></div>
+                                                                        <div class="md-step-title" style={{ color: item.state === 'Closed' ? 'orange' : 'gray' }}>Closed</div>
+                                                                        <div class="md-step-bar-left"></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
-
-
-
-
                                                     </div>
-                                                </div>
 
+
+
+
+
+                                                </div>
                                             </div>
-                                        ))}
-                                    </div>
+
+                                        </div>
+                                    ))}
+                                </div>
                                 )}
+
+
+
+                                 
+
+
 
                             </div>
                         </div>

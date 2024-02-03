@@ -175,7 +175,7 @@ const Employee = () => {
         setisShowCard(false);
     }
 
-   
+
 
     return (
         <div>
@@ -198,7 +198,7 @@ const Employee = () => {
                                         <div className='row'>
                                             <div className='col-md-6'>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon"/>
+                                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchIcon" />
                                                     <button className="btn btn-success" type="button"><i class="fa fa-search"></i></button>
 
                                                 </div>
@@ -278,37 +278,42 @@ const Employee = () => {
                                 isShowCard && <div className='card-body'>
                                     <div className='row'>
                                         {
-                                            emplist.map((item, index) => {
+                                            emplist.map((item) => {
                                                 return (
                                                     <div className='col-4'>
                                                         <div className='card card-margin mb-4 bg-body-tertiary'>
-                                                            <div className='card-header bg-info'><strong>Employee Name</strong> - {item.employeeName}</div>
-                                                            <div className='card-body'>
+                                                            <div className='card-header text-start bg-info'>
+
+                                                                <i className='fa fa-user fa-lg'></i> {item.employeeName}
+                                                            </div>
+                                                            <div className='card-body text-start'>
                                                                 <div className='row'>
-                                                                    <div className='col-2'>
-                                                                        <strong>{index + 1}</strong>
+
+                                                                    <div className='col-6'>
+                                                                        <strong>E-mail</strong> - {item.emailId}
+                                                                    </div>
+                                                                    <div className='col-6'>
+                                                                        <strong>Contact</strong> - {item.contactNo}
                                                                     </div>
 
-                                                                    <div className='col-6'><strong>Department Name</strong> - {item.deptName}
-                                                                    </div>
-
-                                                                    <div className='col-4'>
-                                                                        <strong>Contact No</strong> - {item.contactNo}
-                                                                    </div>
                                                                 </div>
-                                                                <div className='row mt-3'>
-                                                                    <div className='col-9'>
+                                                                <div className='row'>
+                                                                    <div className='col-6'>
                                                                         <strong>Role</strong> - {item.role}
                                                                     </div>
+                                                                    <div className='col-6'>
+                                                                        <strong>Department Name</strong> - {item.deptName}
+                                                                    </div>
                                                                 </div>
-                                                                <div className='row mt-3'>
-                                                                    <div className={`col-2 text-end ${isShowForm ? 'offset-6' : 'offset-2'}`}>
-                                                                        <td><button className='btn btn-sm btn-primary' onClick={() => { onEditEmp(item.employeeId) }} ><i className='fa fa-pencil'></i></button> </td>
+                                                               
+                                                            </div>
+                                                            <div className='row  d-flex justify-content-between mb-2 text-start'>
+                                                                <div className={`col-2  ${isShowForm ? 'offset-' : 'offset-1'}`}>
+                                                                    <td><button className='btn btn-sm btn-primary' onClick={() => { onEditEmp(item.employeeId) }} ><i className='fa fa-pencil'></i></button> </td>
 
-                                                                    </div>
-                                                                    <div className='col-2 text-end'>
-                                                                        <td> <button className='btn btn-sm btn-danger' onClick={() => { onDeleteEmp(item.employeeId) }}><i className='fa fa-trash-o'></i></button></td>
-                                                                    </div>
+                                                                </div>
+                                                                <div className='col-2  '>
+                                                                    <td> <button className='btn btn-sm btn-danger' onClick={() => { onDeleteEmp(item.employeeId) }}><i className='fa fa-trash-o'></i></button></td>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -465,7 +470,7 @@ const Employee = () => {
                 </div>
 
 
-              
+
             </div>
 
         </div >
